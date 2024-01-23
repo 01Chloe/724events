@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { useState } from "react"
+import PropTypes from "prop-types"
 
-import "./style.scss";
+import "./style.scss"
 
 const Select = ({
   selection,
@@ -13,13 +13,13 @@ const Select = ({
   label,
   type = "normal",
 }) => {
-  const [value, setValue] = useState();
-  const [collapsed, setCollapsed] = useState(true);
+  const [value, setValue] = useState(null)
+  const [collapsed, setCollapsed] = useState(true)
   const changeValue = (newValue) => {
-    onChange();
-    setValue(newValue);
-    setCollapsed(newValue);
-  };
+    onChange(newValue)
+    setValue(newValue)
+    setCollapsed(true)
+  }
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
       {label && <div className="label">{label}</div>}
@@ -55,16 +55,16 @@ const Select = ({
           data-testid="collapse-button-testid"
           className={collapsed ? "open" : "close"}
           onClick={(e) => {
-            e.preventDefault();
-            setCollapsed(!collapsed);
+            e.preventDefault()
+            setCollapsed(!collapsed)
           }}
         >
           <Arrow />
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Arrow = () => (
   <svg
@@ -79,7 +79,7 @@ const Arrow = () => (
       fill="#5B32FF"
     />
   </svg>
-);
+)
 
 Select.propTypes = {
   selection: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -98,4 +98,4 @@ Select.defaultProps = {
   name: "select",
 }
 
-export default Select;
+export default Select

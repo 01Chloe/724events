@@ -1,37 +1,41 @@
-import { useState } from "react";
-import EventCard from "../../components/EventCard";
-import Select from "../../components/Select";
-import { useData } from "../../contexts/DataContext";
-import Modal from "../Modal";
-import ModalEvent from "../ModalEvent";
+import { useState } from "react"
+import EventCard from "../../components/EventCard"
+import Select from "../../components/Select"
+import { useData } from "../../contexts/DataContext"
+import Modal from "../Modal"
+import ModalEvent from "../ModalEvent"
 
-import "./style.css";
+import "./style.css"
 
-const PER_PAGE = 9;
+const PER_PAGE = 9
 
 const EventList = () => {
-  const { data, error } = useData();
-  const [type, setType] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = (
-    (!type
-      ? data?.events
-      : data?.events) || []
-  ).filter((event, index) => {
+  const { data, error } = useData()
+  const [type, setType] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
+
+  let filteredEvents = data?.events
+
+  if (type) {
+    filteredEvents = data?.events.filter((event) => event.type === type)
+  }
+
+  filteredEvents = (filteredEvents || []).filter((event, index) => {
     if (
       (currentPage - 1) * PER_PAGE <= index &&
       PER_PAGE * currentPage > index
     ) {
-      return true;
+      return true
     }
-    return false;
-  });
+    return false
+  })
+
   const changeType = (evtType) => {
-    setCurrentPage(1);
-    setType(evtType);
-  };
-  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
-  const typeList = new Set(data?.events.map((event) => event.type));
+    setCurrentPage(1)
+    setType(evtType)
+  }
+  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1
+  const typeList = new Set(data?.events.map((event) => event.type))
   return (
     <>
       {error && <div>An error occured</div>}
@@ -70,7 +74,7 @@ const EventList = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default EventList;
+export default EventList
