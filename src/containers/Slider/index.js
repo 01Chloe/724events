@@ -8,8 +8,10 @@ const Slider = () => {
   const { data } = useData()
   const [index, setIndex] = useState(0)
   const [selectedRadio, setSelectedRadio] = useState(0)
+  const [autoplay, setAutoplay] = useState(true)
+
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
+    new Date(evtA.date) < new Date(evtB.date) ? 1 : -1
   )
   const nextCard = () => {
     if (byDateDesc && byDateDesc.length > 0) {
@@ -21,8 +23,17 @@ const Slider = () => {
       }, 5000)
     }
   }
+
+  const changeDot = (idx) => {
+    setAutoplay(false)
+    setIndex(idx)
+    setSelectedRadio(idx)
+  }
+
   useEffect(() => {
-    nextCard()
+    if (autoplay) {
+      nextCard()
+    }
   })
   return (
     <div className="SlideCardList">
@@ -52,6 +63,7 @@ const Slider = () => {
                   name="radio-button"
                   checked={selectedRadio === radioIdx}
                   onChange={() => setSelectedRadio(radioIdx)}
+                  onMouseDown={() => changeDot(radioIdx)}
                 />
               ))}
             </div>
