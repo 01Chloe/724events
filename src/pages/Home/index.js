@@ -117,7 +117,7 @@ const Page = () => {
           </Modal>
         </div>
       </main>
-      <footer className="row">
+      <footer className="row" data-testid="footer">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
           {last && (
@@ -126,7 +126,7 @@ const Page = () => {
               title={last?.title}
               date={new Date(last?.date)}
               small
-              label="boom"
+              label={last?.type}
             />
           )}
         </div>
