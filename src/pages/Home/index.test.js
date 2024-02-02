@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import Home from "./index"
-import events from "../../../public/events.json"
+import dataEvents from "../../../public/events.json"
 
 describe("When Form is created", () => {
   it("a list of fields card is displayed", async () => {
@@ -76,9 +76,8 @@ describe("When a page is created", () => {
   })
   it("an event card, with the last event, is displayed", () => {
     render(<Home />)
-    expect(events.events[events.events.length - 1].id).toBe(18)
-    expect(events.events[events.events.length - 1].date).toBe(
-      "2022-04-29T20:28:45.744Z"
-    )
+    const lastEvents = dataEvents.events[dataEvents.events.length - 1]
+    expect(lastEvents.id).toBe(18)
+    expect(lastEvents.date).toBe("2022-04-29T20:28:45.744Z")
   })
 })
